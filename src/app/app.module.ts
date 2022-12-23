@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Third-party
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AudioContextModule } from 'angular-audio-context';
 
 // Custom
@@ -23,7 +23,7 @@ import { HomeModule } from './home/home.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule,
+    // NgbModule,
     AudioContextModule.forRoot('playback'),
     HomeModule,
   ],

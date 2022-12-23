@@ -107,5 +107,7 @@
       }
     }
   },
-  "defaultProject": "yt-playalong"
+  "cli": {
+    "analytics": false
+  }
 }
