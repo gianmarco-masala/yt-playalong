@@ -1,7 +1,12 @@
 <mat-toolbar color="primary">
-    <span>YTPlayAlong</span>
-    <div class="links">
-      <a class="navbar-link" routerLink="play" routerLinkActive="active">Play</a>
-      <a class="navbar-link" routerLink="settings" routerLinkActive="active">Audio Settings</a>
-    </div>
-  </mat-toolbar>
+  <span>YTPlayAlong</span>
+  <span class="spacer"></span>
+  <button
+    class="settings-btn"
+    mat-icon-button
+    (click)="onOpenSettings()"
+    matTooltip="Settings"
+  >
+    <mat-icon fontIcon="settings"></mat-icon>
+  </button>
+</mat-toolbar>
