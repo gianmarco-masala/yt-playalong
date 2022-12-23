@@ -1,0 +1,45 @@
+.url-input {
+    margin-top: 1rem;
+    display: flex;
+    width: 100%;
+    min-width: 50vw;
+
+    input {
+        width: 100%;
+    }
+}
+
+.iframe-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    min-height: 360px;
+    background-color: #0000006e;
+}
+
+.transport-bar {
+    display: flex;
+    justify-content: center;
+
+    button {
+        display: flex;
+        background: none;
+        border: none;
+        height: 3rem;
+        width: 3rem;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+    }
+
+    img {
+        height: 100%;
+        width: 100%;
+    }
+
+    .pause-btn {
+        height: 86%;
+        width: 86%;
+    }
+}

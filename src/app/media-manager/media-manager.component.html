@@ -1,0 +1,38 @@
+<div class="url-input">
+    <input type="text" [(ngModel)]="urlInput" placeholder="YouTube URL...">
+    <button class="btn btn-sm btn-outline-primary" (click)="onAddToQueue()" [disabled]="!urlInput"
+        title="Add to queue">Add to queue</button>
+</div>
+
+<div class="video-player">
+    <div class="iframe-wrapper">
+        <div id="ytplayer"></div>
+    </div>
+    <div class="queue">
+        <h5>Queue</h5>
+        <div class="list-group">
+            <button *ngFor="let video of queue" type="button" class="list-group-item list-group-item-action"
+                (click)="onLoadVideo(video)">
+                {{ video.title }}
+            </button>
+            <div class="transport-bar">
+                <div class="play-pause-btn">
+                    <button *ngIf="!isPlaying" (click)="onPlay()">
+                        <img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAACh0lEQVR4nO3aTYhOURzH8Y93iyGvUaQkYbxsppSFiIWFlYUldl6Sl1jYEgt2WJAdsjIrK+9NYiFFRsKQktmQCWlqaryMxZnLmNLMfe5zn/vy3G+dns095////57/Pefcc/5UVFRUVFQ0LeMS9p+KJZiBb/iZ2KOCMBuX0IeBwfYZJzAlQ78awnx0+xv48NaNLZl51wBu+3/wQ9s1LMjIx9RYbnTBR60XhzE+C2fTYLt4AkStE2sy8HdExsZ8fmaNdlbhAc5hWo1jpEJcAcYktLUHL4VMygVxBagHc4UltANLM7D/D1kIELEeT3AUkzL0IxaH1DYJjtReY2MD4/hDlhkwlMXC/uKysMtsGHkRgDDBbkMXdko24Y6aPAkQMR0XcA+taRvLowARa/EUJzE5LSN5FgAm4AieY1MaBvIuQMQi3MBVzKnnwEURIGIrXuGAOvleNAEI3xKn8QhtSQcrogARbXiIM2ipdZAiC0A4Z9iPZ8KqEZuiCxCxEHewOW7HsggAE3FRzEPZMgkAs4SVYtSUTQDC6dOoKaMAsSijAJ1xHi6bAD1oj9OhTAL0C4etvXE6lUWAd8KR2vW4HYsuwA+cxUrh3iE2Rb6yeoxdg781U8QM+IqDWC1h8BQvA9qxDx/rNWBRBHiLvbhZ74Hz/gp8xymskELw5DsD7mM3XqRpJI8Z8EWY3ddJOXjylQEDuCJUlHxqlNG8CPBGqB2422jDWb8CfTgm7OQaHjzZZkCH8K93ZehDJhnwATuwQcbBE1+AgQS2fuE8lgl1AIWkdGVycWnV5IWScEsTl8rCPLzXxMXShAuI4eXyPTiuYOXySQuRWoTihT7hXK4/sUcVFRUVFRUVjeI3WCzB0Fa941AAAAAASUVORK5CYII=">
+                    </button>
+                    <button class="pause-btn" *ngIf="isPlaying" (click)="onPause()">
+                        <img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABAklEQVRoge2ay2rCUBRFlxJHxbFfUejYBxTE7xY/wTqx7Rd02k4EC3UQg9gcyY1N7qawFxwIJOzNumR2Lhgtg4b3I+AZeDw/RxyBHbAGvhN7+8q9YgG8Az+J8wbMhbm1kkOLkmoOwEyQe8WIdif0e16BImNujdUfSqpZ5sodBkVPKZYNRBm95EYCDx0UjXPlRgL/CguosYAaC6ixgBoLqLGAGguosYAaC6ixgBoLqLGAGguosYAaC6iJBL46yP3MlRsJvHRQtM2YW6OgXG3eu8faEy/j+soNmXP/OnQqyA2ZUa4225xQSkmnuU1XDQouVwImN775oPy/N6RfCegr12TnBKjv4du3yK7IAAAAAElFTkSuQmCC">
+                    </button>
+                </div>
+                <div class="stop-btn">
+                    <button>
+                        <img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAACQ0lEQVR4nO2b3U5TQRDHf5ZEPrTFGFprKAk+AIW3whcCDOEZ9FUw4LVcaMGWEGqirSZFL+YQGi92Ttmpu6e7v2TSizlnO/9/Z0+/5kAmk8lkMsnyxGCNDrANNIHXxWMTaAMvgUZx3DpQA1aBFWBpKvcdmABjYATcAcOp3A1wBQyKuCweL4AvBhpmZg94VxT1J3BcAUfA7lwVFzSAE+TVCi3835gAx0B9XuK3gLMIhGrxEdmWptSLhUOLKxufkGuOGScRiJo1jq3E7xHnntdiAnQ1cbUSBrwteVxs1IB9i4VieKt7bFxq4rRXtgO80haJmDaw6TpAM+CNXS3BcGrQDGgZFhIKpwbNgCq3/z1eBiTfAYtgQNOVTMEArw7YMCwkFF4dsGpYSChWXEnNAOfJFcHLgGXDQkLh1JCCAbkDXMl8DVBOTr4DFsEArw5YeDQDfv2XKubL2JVMwQCnBs0Ap3sVIXeAK5mCAV4dsAhbIHeAK6kZMDIsJBReBgwMCwlF35XUDHCeXBGSN8DZxSkY4NUB3wwLCUXyW8DLgAvDQkLhraHKAxI9TVyZH0Q+lDgmVt5bLLJLdYekdiwMABk5Cy1o1jiyEg8yKHkagaiycc7DILYZHaoxLXqKMhjlQx3ZDjFeEyZI2z+fl/hpusAhMocXWngPOOCRFzyLGyY2kVG0DWQur4UMJbSQGyZeFM/zDHiK/NmyhrwF3w80D5GbJH4iP8L8Bn4gAm+RGyb6yBebPvLZ5Br4DHw10JDJZDKZTIr8BWwxlOvFgQzbAAAAAElFTkSuQmCC">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
