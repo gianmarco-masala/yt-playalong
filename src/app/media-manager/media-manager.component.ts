@@ -6,23 +6,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./media-manager.component.scss']
 })
 export class MediaManagerComponent implements OnInit {
-  urlInput: string;
+  urlInput!: string;
   autoplay = 1;
-  queue = [];
-  player;
+  queue: any = [];
+  player: any;
   isPlaying = false;
-  videoId: string;
+  videoId!: string | null;
 
   ngOnInit(): void {
     // Init YT IFrame API
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     const firstTag = document.getElementsByTagName('script')[0];
-    firstTag.parentNode.insertBefore(tag, firstTag);
+    firstTag?.parentNode?.insertBefore(tag, firstTag);
 
     // Create player
-    window['onYouTubeIframeAPIReady'] = (s) => {
-      console.log('OOOOOOOOOOOOO',s);
+    (window as any).onYouTubeIframeAPIReady = () => {
+      console.log('OOOOOOOOOOOOO');
       
       this.player = new (window as any).YT.Player('ytplayer', {
         playerVars: {
@@ -44,7 +44,7 @@ export class MediaManagerComponent implements OnInit {
     }
   }
 
-  onPlayerStateChange(e) {
+  onPlayerStateChange(e: any) {
     if (e.target && e.target.videoTitle && e.target.videoTitle !== '') {
       console.log('onPlayerStateChange', e.target.videoTitle);
       // this.queue.push({
@@ -53,10 +53,10 @@ export class MediaManagerComponent implements OnInit {
       // });
     }
   }
-  onPlayerReady(e) {
+  onPlayerReady(e: any) {
     console.log('onPlayerReady', e);
   }
-  onPlayerError(e) {
+  onPlayerError(e: any) {
     console.log('onPlayerError', e);
   }
 
@@ -89,9 +89,9 @@ export class MediaManagerComponent implements OnInit {
     this.player.loadVideoById(id);
   }
 
-  getId(url: string) {
+  getId(url: string | null) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
+    const match = url?.match(regExp);
 
     return (match && match[2].length === 11)
       ? match[2]
