@@ -1,4 +1,7 @@
 :host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 1rem;
 }
 
@@ -6,38 +9,23 @@
   display: flex;
   width: 100%;
   min-width: 50vw;
+  margin-bottom: 1rem;
 
   input {
     width: 100%;
   }
 }
 
-.iframe-wrapper {
+.video-player {
   display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  min-height: 360px;
-  background-color: #0000006e;
-}
+  flex-direction: column;
+  height: 100%;
 
-.transport-bar {
-  display: flex;
-  justify-content: center;
-
-  button {
+  .iframe-wrapper {
     display: flex;
-    background: none;
-    border: none;
-    height: 3rem;
-    width: 3rem;
-    padding: 0;
     justify-content: center;
-    align-items: center;
-  }
-
-  img {
-    height: 100%;
-    width: 100%;
+    margin-bottom: 1rem;
+    min-height: 360px;
+    background-color: #0000006e;
   }
 }

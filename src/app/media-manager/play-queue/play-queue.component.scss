@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.queue {
+  height: 100%;
+
+  .queue-header {
+    justify-content: center;
+    color: white;
+  }
+
+  .mat-mdc-list-item-unscoped-content {
+    display: flex;
+  }
+
+  .drag-icon {
+    cursor: grab;
+  }
+}

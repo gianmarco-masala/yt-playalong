@@ -13,6 +13,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { NavbarModule } from './navbar/navbar.module';
 import { FxRackModule } from './fx-rack/fx-rack.module';
 import { MediaManagerModule } from './media-manager/media-manager.module';
+import { TransportBarModule } from './transport-bar/transport-bar.module';
+import { YouTubePlayerModule } from '@angular/youtube-player';
+import { AudioPlayerService } from './audio-player.service';
 
 @NgModule({
   declarations: [AppComponent, AudioSettingsComponent],
@@ -23,7 +26,10 @@ import { MediaManagerModule } from './media-manager/media-manager.module';
     MediaManagerModule,
     FxRackModule,
     ToastrModule.forRoot(),
+    TransportBarModule,
+    YouTubePlayerModule,
   ],
+  providers: [AudioPlayerService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

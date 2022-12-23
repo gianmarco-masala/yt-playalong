@@ -2,27 +2,29 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { AudioPlayerService } from '../audio-player.service';
 
 @Component({
   selector: 'app-media-manager',
   templateUrl: './media-manager.component.html',
   styleUrls: ['./media-manager.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MediaManagerComponent implements OnInit {
   urlInput: string = 'https://www.youtube.com/watch?v=ldUyF5eaEH8';
-  autoplay = 1;
   queue: any[] = [];
-  player: any;
-  isPlaying = false;
+  player!: YT.Player;
   videoId!: string | null;
+  isPlaying = false;
+  autoplay = 1;
 
   constructor(
     private toastrService: ToastrService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private audioPlayerService: AudioPlayerService
   ) {}
 
   ngOnInit(): void {
@@ -43,18 +45,20 @@ export class MediaManagerComponent implements OnInit {
           rel: 0,
           showinfo: 0,
           fs: 0,
-          playsinline: 1,
+          playsinline: 1
         },
         events: {
           onStateChange: (e: any) => this.onPlayerStateChange(e),
           onReady: (e: any) => this.onPlayerReady(e),
-          onError: (e: any) => this.onPlayerError(e),
-        },
+          onError: (e: any) => this.onPlayerError(e)
+        }
       });
 
       if (!this.player) {
         this.toastrService.error('No player available', 'ERROR');
       }
+
+      this.audioPlayerService.initPlayer(this.player);
     };
   }
 
@@ -63,7 +67,7 @@ export class MediaManagerComponent implements OnInit {
       if (!this.queue.map((v) => v.videoId).includes(this.videoId)) {
         this.queue.push({
           title: e.target.videoTitle,
-          videoId: this.videoId,
+          videoId: this.videoId
         });
       }
       this.cd.detectChanges();
@@ -78,38 +82,17 @@ export class MediaManagerComponent implements OnInit {
     console.log('onPlayerError', e);
   }
 
-  onPlay() {
-    this.player.playVideo();
-    this.isPlaying = true;
-  }
-
-  onPause() {
-    this.player.pauseVideo();
-    this.isPlaying = false;
-  }
-
-  onStop() {
-    this.player.stopVideo();
-    this.isPlaying = false;
-  }
-
-  onPrevious() {
-    // not working: replace with loadByid
-    this.player.previousVideo();
-    this.isPlaying = false;
-  }
-
-  onNext() {
-    // not working: replace with loadByid
-    this.player.nextVideo();
-    this.isPlaying = false;
-  }
-
   onAddToQueue() {
     this.videoId = this.getId(this.urlInput);
 
+    if (!this.videoId) {
+      this.toastrService.error('No video ID found. Try Again', 'Error');
+      return;
+    }
+
     // Triggers onPlayerStateChange
     this.player.cueVideoById(this.videoId, 0);
+    this.urlInput = '';
   }
 
   onLoadVideo(id: string) {
