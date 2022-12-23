@@ -93,8 +93,21 @@ export class MediaManagerComponent implements OnInit {
     this.isPlaying = false;
   }
 
+  onPrevious() {
+    // not working: replace with loadByid
+    this.player.previousVideo();
+    this.isPlaying = false;
+  }
+
+  onNext() {
+    // not working: replace with loadByid
+    this.player.nextVideo();
+    this.isPlaying = false;
+  }
+
   onAddToQueue() {
     this.videoId = this.getId(this.urlInput);
+
     // Triggers onPlayerStateChange
     this.player.cueVideoById(this.videoId, 0);
   }

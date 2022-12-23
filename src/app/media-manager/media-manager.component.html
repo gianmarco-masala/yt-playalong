@@ -6,12 +6,12 @@
     placeholder="YouTube URL..."
   />
   <button
-    mat-flat-button
+    mat-icon-button
     (click)="onAddToQueue()"
     [disabled]="!urlInput"
     matTooltip="Add to queue"
   >
-    +
+    <mat-icon fontIcon="playlist_add"></mat-icon>
   </button>
 </div>
 
@@ -19,18 +19,13 @@
   <div class="iframe-wrapper">
     <div id="ytplayer"></div>
   </div>
-  <div class="queue">
-    <h5>Queue</h5>
-    <mat-list>
-      <mat-list-item *ngFor="let video of queue">
-        <button mat-raised-button (click)="onLoadVideo(video)">
-          {{ video.title }}
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </div>
 
   <div class="transport-bar">
+    <div class="previous-btn">
+      <button mat-icon-button (click)="onPrevious()">
+        <mat-icon fontIcon="skip_previous"></mat-icon>
+      </button>
+    </div>
     <div class="play-pause-btn">
       <button mat-icon-button *ngIf="!isPlaying" (click)="onPlay()">
         <mat-icon fontIcon="play_arrow"></mat-icon>
@@ -49,5 +44,21 @@
         <mat-icon fontIcon="stop"></mat-icon>
       </button>
     </div>
+    <div class="next-btn">
+      <button mat-icon-button (click)="onNext()">
+        <mat-icon fontIcon="skip_next"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="queue">
+    <h5>Queue</h5>
+    <mat-list>
+      <mat-list-item *ngFor="let video of queue">
+        <button mat-raised-button (click)="onLoadVideo(video)">
+          {{ video.title }}
+        </button>
+      </mat-list-item>
+    </mat-list>
   </div>
 </div>
