@@ -1,18 +1,24 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AudioPlayerService, Video } from 'src/app/audio-player.service';
 
 @Component({
   selector: 'app-play-queue',
   templateUrl: './play-queue.component.html',
-  styleUrls: ['./play-queue.component.scss'],
+  styleUrls: ['./play-queue.component.scss']
 })
-export class PlayQueueComponent {
-  @Input() queue!: { title: string; videoId: string }[];
-  @Output() videoSelected = new EventEmitter<string>();
+export class PlayQueueComponent implements OnInit {
+  queue: Video[] = [];
   dragging = false;
 
-  onVideoSelected(id: string) {
-    this.videoSelected.emit(id);
+  constructor(private playerService: AudioPlayerService) {}
+
+  ngOnInit() {
+    this.playerService.playlist$.subscribe((q) => (this.queue = q));
+  }
+
+  onVideoSelected(video: Video) {
+    this.playerService.loadVideo(video);
   }
 
   drop(event: CdkDragDrop<string[]>) {

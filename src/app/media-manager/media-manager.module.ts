@@ -5,10 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MediaManagerComponent } from './media-manager.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatCardModule } from '@angular/material/card';
 import { PlayQueueModule } from './play-queue/play-queue.module';
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PlayQueueModule } from './play-queue/play-queue.module';
     MatProgressSpinnerModule,
     MatCardModule,
     PlayQueueModule,
+    MatFormFieldModule
   ],
-  exports: [MediaManagerComponent],
+  exports: [MediaManagerComponent]
 })
 export class MediaManagerModule {}

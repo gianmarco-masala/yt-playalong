@@ -63,13 +63,19 @@ export class MediaManagerComponent implements OnInit {
   }
 
   onPlayerStateChange(e: any) {
-    if (e.target && e.target.videoTitle && e.target.videoTitle !== '') {
-      if (!this.queue.map((v) => v.videoId).includes(this.videoId)) {
-        this.queue.push({
-          title: e.target.videoTitle,
-          videoId: this.videoId
-        });
-      }
+    this.audioPlayerService.onPlayerStateChange(e);
+
+    if (
+      this.videoId &&
+      e.target &&
+      e.target.videoTitle &&
+      e.target.videoTitle !== ''
+    ) {
+      this.audioPlayerService.addToPlaylist({
+        title: e.target.videoTitle,
+        videoId: this.videoId,
+        selected: true,
+      });
       this.cd.detectChanges();
     }
   }

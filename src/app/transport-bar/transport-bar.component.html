@@ -6,13 +6,13 @@
       </button>
     </div>
     <div class="play-pause-btn">
-      <button mat-icon-button *ngIf="!isPlaying" (click)="onPlay()">
+      <button mat-icon-button *ngIf="state !== 'playing'" (click)="onPlay()">
         <mat-icon fontIcon="play_arrow"></mat-icon>
       </button>
       <button
         mat-icon-button
         class="pause-btn"
-        *ngIf="isPlaying"
+        *ngIf="state === 'playing'"
         (click)="onPause()"
       >
         <mat-icon fontIcon="pause"></mat-icon>

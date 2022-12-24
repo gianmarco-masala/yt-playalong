@@ -2,25 +2,14 @@
   display: flex;
   min-height: 3rem;
   justify-content: center;
-  background: #e3e3e3;
+  background: #202020;
+
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .transport-bar {
   display: flex;
-
-  button {
-    display: flex;
-    background: none;
-    border: none;
-    height: 3rem;
-    width: 3rem;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-  }
-
-  img {
-    height: 100%;
-    width: 100%;
-  }
+  color: white;
 }

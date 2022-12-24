@@ -30,6 +30,6 @@ import { AudioPlayerService } from './audio-player.service';
     YouTubePlayerModule,
   ],
   providers: [AudioPlayerService],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

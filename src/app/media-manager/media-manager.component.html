@@ -1,27 +1,34 @@
 <div class="video-player">
-  <div class="iframe-wrapper">
-    <div id="ytplayer"></div>
+  <div class="video-section">
+    <div class="iframe-wrapper">
+      <div id="ytplayer"></div>
+    </div>
   </div>
+  <!-- <div matTooltip="drag" class="draggable-divider"></div> -->
+  <div class="playlist-section">
+    <div class="url-input">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="urlInput"
+          placeholder="YouTube URL..."
+        />
+        <button
+          class="add-btn"
+          mat-icon-button
+          [color]="addBtn.disabled ? 'secondary' : 'primary'"
+          (click)="onAddToQueue()"
+          [disabled]="!urlInput"
+          matTooltip="Add to queue"
+          matSuffix
+          #addBtn
+        >
+          <mat-icon fontIcon="playlist_add"></mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
 
-  <div class="url-input">
-    <input
-      matInput
-      type="text"
-      [(ngModel)]="urlInput"
-      placeholder="YouTube URL..."
-    />
-    <button
-      mat-icon-button
-      (click)="onAddToQueue()"
-      [disabled]="!urlInput"
-      matTooltip="Add to queue"
-    >
-      <mat-icon fontIcon="playlist_add"></mat-icon>
-    </button>
+    <app-play-queue></app-play-queue>
   </div>
-
-  <app-play-queue
-    [queue]="queue"
-    (videoSelected)="onLoadVideo($event)"
-  ></app-play-queue>
 </div>

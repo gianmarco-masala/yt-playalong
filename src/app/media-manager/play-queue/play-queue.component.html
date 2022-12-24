@@ -12,11 +12,12 @@
         class="list-item"
         *ngFor="let video of queue; let i = index"
         cdkDrag
+        [(selected)]="video.selected"
       >
         <div
           matListItemTitle
           class="video-title"
-          (click)="onVideoSelected(video.videoId)"
+          (click)="onVideoSelected(video)"
         >
           {{ video.title }}
         </div>

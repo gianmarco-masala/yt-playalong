@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
+} from '@angular/core';
 import { AudioPlayerService } from '../audio-player.service';
 
 @Component({
@@ -9,38 +14,41 @@ import { AudioPlayerService } from '../audio-player.service';
 })
 export class TransportBarComponent implements OnInit {
   player!: YT.Player;
+  state!: string;
   isPlaying = false;
 
-  constructor(private playerService: AudioPlayerService) {}
+  constructor(
+    private playerService: AudioPlayerService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.playerService.player$.subscribe((p) => (this.player = p));
+    this.playerService.state$.subscribe((s) => {
+      this.state = s;
+      this.cd.detectChanges();
+    });
   }
 
   onPlay() {
     this.playerService.play();
-    this.isPlaying = true;
   }
 
   onPause() {
     this.playerService.pause();
-    this.isPlaying = false;
   }
 
   onStop() {
     this.playerService.stop();
-    this.isPlaying = false;
   }
 
   onPrevious() {
     // not working: replace with loadByid
     this.playerService.previous();
-    this.isPlaying = false;
   }
 
   onNext() {
     // not working: replace with loadByid
     this.playerService.next();
-    this.isPlaying = false;
   }
 }
