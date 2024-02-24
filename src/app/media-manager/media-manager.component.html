@@ -18,9 +18,9 @@
           class="add-btn"
           mat-icon-button
           [color]="addBtn.disabled ? 'secondary' : 'primary'"
-          (click)="onAddToQueue()"
+          (click)="onCueVideo()"
           [disabled]="!urlInput"
-          matTooltip="Add to queue"
+          matTooltip="Add to playlist"
           matSuffix
           #addBtn
         >

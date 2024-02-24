@@ -7,11 +7,9 @@ import { AudioMixerService } from '../audio-mixer.service';
   styleUrls: ['./fx-rack.component.scss']
 })
 export class FxRackComponent implements OnInit {
-
-  constructor(private mixerService: AudioMixerService) { }
+  constructor(private mixerService: AudioMixerService) {}
 
   ngOnInit(): void {
-    this.mixerService.setupContext();
+    // this.mixerService.setupContext();
   }
-
 }

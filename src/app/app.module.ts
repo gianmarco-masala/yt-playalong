@@ -1,33 +1,27 @@
-// Core
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { AppComponent } from './app.component';
-
-// Third-party
-import { AudioContextModule } from 'angular-audio-context';
-
-// Custom
-import { AudioSettingsComponent } from './audio-settings/audio-settings.component';
+// import { AudioContextModule } from 'angular-audio-context';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 import { ToastrModule } from 'ngx-toastr';
-import { NavbarModule } from './navbar/navbar.module';
+import { AppComponent } from './app.component';
+import { AudioPlayerService } from './audio-player.service';
+import { AudioSettingsComponent } from './audio-settings/audio-settings.component';
 import { FxRackModule } from './fx-rack/fx-rack.module';
 import { MediaManagerModule } from './media-manager/media-manager.module';
+import { NavbarModule } from './navbar/navbar.module';
 import { TransportBarModule } from './transport-bar/transport-bar.module';
-import { YouTubePlayerModule } from '@angular/youtube-player';
-import { AudioPlayerService } from './audio-player.service';
 
 @NgModule({
   declarations: [AppComponent, AudioSettingsComponent],
   imports: [
     BrowserAnimationsModule,
-    AudioContextModule.forRoot('playback'),
+    // AudioContextModule.forRoot('playback'),
+    YouTubePlayerModule,
     NavbarModule,
     MediaManagerModule,
     FxRackModule,
     ToastrModule.forRoot(),
-    TransportBarModule,
-    YouTubePlayerModule,
+    TransportBarModule
   ],
   providers: [AudioPlayerService],
   bootstrap: [AppComponent]

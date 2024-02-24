@@ -3,8 +3,8 @@ import { AudioMixerService } from '../audio-mixer.service';
 import { FxRackComponent } from './fx-rack.component';
 
 @NgModule({
-    declarations: [FxRackComponent],
-    exports: [FxRackComponent],
-    providers: [AudioMixerService]
+  declarations: [FxRackComponent],
+  exports: [FxRackComponent],
+  providers: [AudioMixerService]
 })
-export class FxRackModule { }
+export class FxRackModule {}

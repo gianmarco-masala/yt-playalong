@@ -1,9 +1,5 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AudioPlayerService } from '../audio-player.service';
 
 @Component({
@@ -13,21 +9,12 @@ import { AudioPlayerService } from '../audio-player.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransportBarComponent implements OnInit {
-  player!: YT.Player;
-  state!: string;
-  isPlaying = false;
+  state$!: Observable<YT.PlayerState>;
 
-  constructor(
-    private playerService: AudioPlayerService,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(private playerService: AudioPlayerService) {}
 
   ngOnInit() {
-    this.playerService.player$.subscribe((p) => (this.player = p));
-    this.playerService.state$.subscribe((s) => {
-      this.state = s;
-      this.cd.detectChanges();
-    });
+    this.state$ = this.playerService.state$;
   }
 
   onPlay() {
@@ -43,12 +30,10 @@ export class TransportBarComponent implements OnInit {
   }
 
   onPrevious() {
-    // not working: replace with loadByid
     this.playerService.previous();
   }
 
   onNext() {
-    // not working: replace with loadByid
     this.playerService.next();
   }
 }

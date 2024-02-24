@@ -3,36 +3,39 @@
     <mat-card-title>Playlist</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-selection-list
-      cdkDropList
-      (cdkDropListDropped)="drop($event)"
-      [multiple]="false"
-    >
-      <mat-list-option
-        class="list-item"
-        *ngFor="let video of queue; let i = index"
-        cdkDrag
-        [(selected)]="video.selected"
+    <ng-container *ngIf="playlist$ | async as playlist">
+      <mat-selection-list
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+        [multiple]="false"
+        *ngIf="playlist.length"
       >
-        <div
-          matListItemTitle
-          class="video-title"
-          (click)="onVideoSelected(video)"
+        <mat-list-option
+          class="list-item"
+          *ngFor="let video of playlist; let i = index"
+          cdkDrag
+          [(selected)]="video.selected"
         >
-          {{ video.title }}
-        </div>
+          <div
+            matListItemTitle
+            class="video-title"
+            (click)="onVideoSelected(video)"
+          >
+            {{ video.title }}
+          </div>
 
-        <!-- <span matListItem class="video-index">{{ i + 1 }}</span> -->
+          <!-- <span matListItem class="video-index">{{ i + 1 }}</span> -->
 
-        <mat-icon
-          matListItemIcon
-          class="drag-icon"
-          [ngClass]="[dragging ? 'dragging' : '']"
-          cdkDragHandle
-          fontIcon="drag_indicator"
-          matTooltip="Sort item"
-        ></mat-icon>
-      </mat-list-option>
-    </mat-selection-list>
+          <mat-icon
+            matListItemIcon
+            class="drag-icon"
+            [ngClass]="[dragging ? 'dragging' : '']"
+            cdkDragHandle
+            fontIcon="drag_indicator"
+            matTooltip="Sort item"
+          ></mat-icon>
+        </mat-list-option>
+      </mat-selection-list>
+    </ng-container>
   </mat-card-content>
 </mat-card>
