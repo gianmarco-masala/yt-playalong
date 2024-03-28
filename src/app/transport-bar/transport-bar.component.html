@@ -1,4 +1,3 @@
-<ng-container *ngIf="state$ | async as state">
 <div class="transport-bar">
     <div class="previous-btn">
       <button mat-icon-button (click)="onPrevious()">
@@ -6,7 +5,7 @@
       </button>
     </div>
     <div class="play-pause-btn">
-      <button mat-icon-button *ngIf="state !== 1" (click)="onPlay()">
+      <button mat-icon-button *ngIf="state !== 1" (click)="onPlay()" [disabled]="!state || state === 3">
         <mat-icon fontIcon="play_arrow"></mat-icon>
       </button>
       <button
@@ -29,4 +28,3 @@
       </button>
     </div>
   </div>
-</ng-container>

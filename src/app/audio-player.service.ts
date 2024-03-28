@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, take, tap } from 'rxjs';
 
 export interface Video {
   title: string;
@@ -15,7 +15,7 @@ export interface PlayerEvent {
 export class AudioPlayerService {
   private player = new BehaviorSubject<YT.Player | undefined>(undefined);
   player$ = this.player.asObservable();
-  private state = new BehaviorSubject<YT.PlayerState>(-1);
+  private state = new Subject<YT.PlayerState>();
   state$ = this.state.asObservable();
   private playlist = new BehaviorSubject<Video[]>([]);
   playlist$ = this.playlist.asObservable();
@@ -90,15 +90,34 @@ export class AudioPlayerService {
   }
 
   previous() {
-    this.player.value?.previousVideo();
+    this.playlist
+      .pipe(
+        take(1),
+        tap((playlist) =>
+          this.loadVideo(playlist[playlist.findIndex((v) => v.selected) - 1])
+        )
+      )
+      .subscribe();
   }
 
   next() {
-    this.player.value?.nextVideo();
+    this.playlist
+      .pipe(
+        take(1),
+        tap((playlist) =>
+          this.loadVideo(playlist[playlist.findIndex((v) => v.selected) + 1])
+        )
+      )
+      .subscribe();
   }
 
-  loadVideo(videoId: string) {
-    this.player.value?.loadVideoById(videoId);
+  loadVideo(video: Video) {
+    this.player.value?.loadVideoById(video.id);
+    this.playlist.next(
+      this.playlist.value.map((v) => {
+        return { ...v, selected: v.id === video.id };
+      })
+    );
   }
 
   cueVideo(videoUrl: string) {
@@ -113,9 +132,19 @@ export class AudioPlayerService {
   }
 
   addToPlaylist(video: Video) {
-    if (!this.playlist.value.map((v) => v.id).includes(video.id)) {
-      this.playlist.next([...this.playlist.value, video]);
-    }
+    this.playlist
+      .pipe(
+        take(1),
+        tap((p) => {
+          if (!p.map((v) => v.id).includes(video.id)) {
+            this.playlist.next([
+              ...p.map((v) => ({ ...v, selected: false })),
+              video
+            ]);
+          }
+        })
+      )
+      .subscribe();
   }
 
   getId(url: string) {

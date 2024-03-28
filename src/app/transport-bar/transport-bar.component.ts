@@ -1,20 +1,30 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AudioPlayerService } from '../audio-player.service';
 
 @Component({
   selector: 'app-transport-bar',
   templateUrl: './transport-bar.component.html',
-  styleUrls: ['./transport-bar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./transport-bar.component.scss']
 })
-export class TransportBarComponent implements OnInit {
-  state$!: Observable<YT.PlayerState>;
+export class TransportBarComponent implements OnInit, OnDestroy {
+  state!: YT.PlayerState;
+  sub!: Subscription;
 
-  constructor(private playerService: AudioPlayerService) {}
+  constructor(
+    private playerService: AudioPlayerService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.state$ = this.playerService.state$;
+    this.sub = this.playerService.state$.subscribe((s) => {
+      this.state = s;
+      this.cd.detectChanges();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   onPlay() {

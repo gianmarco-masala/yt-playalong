@@ -16,8 +16,4 @@ export class MediaManagerComponent {
     this.audioPlayerService.cueVideo(this.urlInput);
     this.urlInput = '';
   }
-
-  onLoadVideo(id: string) {
-    this.audioPlayerService.loadVideo(id);
-  }
 }
